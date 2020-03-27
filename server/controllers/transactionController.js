@@ -58,6 +58,13 @@ module.exports.addTransaction = async(req, res, next) => {
             data:transaction
         });
     } catch (error) {
+        if(error.name==='ValidationError'){
+            const messages = Object.values(error.errors).map(val => val.message);
+            res.status(400).json({
+                succes:false,
+                error:messages
+            });
+        }
         res.status(500).json({
             success:false,
             error:error.message

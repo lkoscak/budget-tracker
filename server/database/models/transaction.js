@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const transactionSchema = new mongoose.Schema({
     description:{
         type:String,
-        required:true
+        required:[true, 'Description not specified']
     },
     amount:{
         type:Number,
-        required:true
+        required:[true, 'Amount not specified']
     },
     created:{
         type:Date,
