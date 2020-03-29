@@ -4,6 +4,7 @@ import Title from './Title';
 import TransactionHistory from './TransactionHistory';
 import Balance from './Balance';
 import ExpenseIncome from './ExpenseIncome';
+import TransactionForm from './TransactionForm';
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Balance/>
       <ExpenseIncome/>
       <TransactionHistory/>
+      <TransactionForm/>
     </TransactionProvider>
   );
 }

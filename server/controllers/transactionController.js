@@ -6,7 +6,7 @@ const Transaction = require('../database/models/transaction');
 // @access  Public
 module.exports.getTransactions = async(req, res, next) => {
     try {
-        let transactions = await Transaction.find();
+        let transactions = await Transaction.find().sort({'created':'desc'}); //limit(n), skip(n)
         res.status(200).json({
             success:true,
             count:transactions.length,
