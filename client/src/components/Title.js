@@ -1,4 +1,4 @@
-import React from 'react'
+import React from '../../node_modules/@types/react'
 
 const Title = ({titleText}) => {
     return (

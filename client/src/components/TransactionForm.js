@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext} from '../../node_modules/@types/react'
 import {TransactionContext} from '../context/TransactionContext';
 
 const TransactionForm = () => {
