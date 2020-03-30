@@ -43,10 +43,26 @@ export const TransactionProvider = ({children}) => {
         .catch(error => console.error('Error:', error));
     }
 
+    function deleteTransaction(id){
+        fetch(`api/v1/transactions/${id}`,{
+            method:'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success){
+                dispatch({
+                    type:'DELETE_TRANSACTION',
+                    payload:id
+                })
+            }
+        })
+    }
+
     return(
         <TransactionContext.Provider value={{
             transactions:state.transactions,
-            addTransaction}}>
+            addTransaction,
+            deleteTransaction}}>
             {children}
         </TransactionContext.Provider>
     );

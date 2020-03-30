@@ -10,6 +10,8 @@ const TransactionForm = () => {
         amount:""
     });
 
+    
+
     const inputChanged = (e) => {
         const {name,value} = e.target;
         setformInput(prevState => ({
