@@ -12,7 +12,7 @@ const TransactionHistory = () => {
             <tr>
                 <th>Description</th>
                 <th className="text-center">Amount</th>
-                <th>Date</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
