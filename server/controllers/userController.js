@@ -1,5 +1,7 @@
 const User = require('../database/models/user');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 // @desc    Register new user
 // @route   POST api/v1/users/register
@@ -34,18 +36,29 @@ module.exports.registerUser = async (req,res,next) => {
                                 error:error.message
                             });
                         }else{
-                            console.log(hash);
                             newUser.password = hash;
                             newUser.save()
                             .then(registerdUser => {
+                                
+                                jwt.sign({
+                                    id:registerdUser._id
+                                }, process.env.JWT_SECRET,{
+                                    expiresIn:3600
+                                }, (err, token) => {
+                                console.log(err);
                                 res.status(201).json({
                                 success:true,
+                                token:token,
                                 data:{
                                     id:registerdUser._id,
                                     name:registerdUser.name,
                                     email:registerdUser.email
                                 }
-                            })});
+                            })
+                                   
+                                });
+
+                                });
                             
                         }
                     })
