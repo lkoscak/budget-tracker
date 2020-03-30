@@ -52,7 +52,6 @@ module.exports.getTransaction = async(req, res, next) => {
 module.exports.addTransaction = async(req, res, next) => {
     try {
         let transaction = await Transaction.create(req.body);
-        res
         res.status(201).location(`/api/v1/transactions/${transaction._id}`).json({
             success:true,
             data:transaction

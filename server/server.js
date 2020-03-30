@@ -5,6 +5,7 @@ const path = require('path');
 
 const connection = require('./database/config');
 const transactions = require('./routes/transactions');
+const users = require('./routes/users');
 
 const app = express();
 app.use(express.json());
@@ -14,6 +15,9 @@ connection();
 
 // API routes for transactions
 app.use("/api/v1/transactions",transactions);
+
+// API routes for users
+app.use("/api/v1/users",users);
 
 // Statitc folder config
 app.use(express.static(path.join(__dirname,'build')));
