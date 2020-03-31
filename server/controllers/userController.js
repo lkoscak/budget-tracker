@@ -126,3 +126,12 @@ module.exports.loginUser = async (req,res,next) => {
         });
     }
 };
+
+module.exports.getUser=(req,res) => {
+    User.findById(req.user.id)
+    .select('-password')
+    .then(user => res.status(200).json({
+        success:true,
+        data:user
+    }))
+}
