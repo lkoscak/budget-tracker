@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from '../../node_modules/@types/react';
+import React, { createContext, useReducer, useEffect } from 'react';
 import TransactionReducer from './TransactionReducer';
 
 const initialState = {

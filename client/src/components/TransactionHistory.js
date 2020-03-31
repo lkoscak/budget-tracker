@@ -1,4 +1,4 @@
-import React, {useContext} from '../../node_modules/@types/react'
+import React, {useContext} from 'react'
 import {TransactionContext} from '../context/TransactionContext';
 import Transaction from './Transaction';
 
