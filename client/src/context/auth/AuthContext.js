@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useEffect } from 'react';
 
 import AuthReducer from './AuthReducer';
 
@@ -19,6 +19,21 @@ export const AuthProvider = ({children}) => {
 
     const [state, dispatch] = useReducer(AuthReducer, initialState)
 
+    useEffect(authenticateUser,[]);
+
+    // checking if user is authenticated
+    function authenticateUser(){
+        fetch('/api/v1/users/user',{
+            method:'GET',
+            headers:{
+                'x-auth-token':getToken()
+            }
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.log(error))
+    }
+
     return (
         <AuthContext.Provider value={{
             data:state
@@ -26,4 +41,9 @@ export const AuthProvider = ({children}) => {
         {children}
         </AuthContext.Provider>
     )
+}
+
+function getToken(){
+    console.log(localStorage.getItem('token'));
+    return localStorage.getItem('token');
 }
