@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from 'react';
+import React, { createContext, useReducer, useEffect, useContext } from 'react';
 import TransactionReducer from './TransactionReducer';
 
 const initialState = {
@@ -7,16 +7,21 @@ const initialState = {
 
 export const TransactionContext = createContext(initialState);
 
+export const useTransaction = () => useContext(TransactionContext);
+
 export const TransactionProvider = ({children}) => {
+
     const [state, dispatch] = useReducer(TransactionReducer, initialState);
 
+    // Getting transactions
     function getTransactions(){
-        fetch('/api/v1/transactions')
+        fetch('/api/v1/transactions', {method:"GET"})
         .then(res => res.json())
         .then(transactions => dispatch({
             type:'GET_TRANSACTIONS',
             payload:transactions.data
-        }));
+        }))
+        .catch(error => console.log(error));
     }
 
     // Getting transactions from database at TransactionProvider render
@@ -24,23 +29,24 @@ export const TransactionProvider = ({children}) => {
 
     // Working with transactions
     function addTransaction(transaction){
-    fetch('api/v1/transactions', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(transaction),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if(data.success){
-                dispatch({
-                    type:'ADD_TRANSACTION',
-                    payload:data.data
-                })
-            }
-        })
-        .catch(error => console.error('Error:', error));
+
+        fetch('api/v1/transactions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(transaction),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success){
+                    dispatch({
+                        type:'ADD_TRANSACTION',
+                        payload:data.data
+                    })
+                }
+            })
+            .catch(error => console.log('Error:', error));
     }
 
     function deleteTransaction(id){

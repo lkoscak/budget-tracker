@@ -1,10 +1,10 @@
-import React, {useContext} from 'react'
-import {TransactionContext} from '../context/TransactionContext';
+import React from 'react'
+import {useTransaction} from '../context/transaction/TransactionContext';
 import Transaction from './Transaction';
 
 const TransactionHistory = () => {
 
-    const {transactions} = useContext(TransactionContext);
+    const {transactions} = useTransaction();
 
     return (
         <table className="table table-hover">

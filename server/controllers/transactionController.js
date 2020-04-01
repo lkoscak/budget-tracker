@@ -52,15 +52,15 @@ module.exports.getTransaction = async(req, res, next) => {
 module.exports.addTransaction = async(req, res, next) => {
     try {
         let transaction = await Transaction.create(req.body);
-        res.status(201).location(`/api/v1/transactions/${transaction._id}`).json({
+        return res.status(201).location(`/api/v1/transactions/${transaction._id}`).json({
             success:true,
             data:transaction
         });
     } catch (error) {
         if(error.name==='ValidationError'){
             const messages = Object.values(error.errors).map(val => val.message);
-            res.status(400).json({
-                succes:false,
+            return  res.status(400).json({
+                success:false,
                 error:messages
             });
         }

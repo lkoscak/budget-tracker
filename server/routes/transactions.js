@@ -6,8 +6,8 @@ const auth = require('../midleware/auth');
 const {getTransactions, addTransaction, deleteTransaction, getTransaction} = require('../controllers/transactionController');
 
 router.route('/')
-    .get(auth,getTransactions)
-    .post(auth,addTransaction)
+    .get(getTransactions)
+    .post(addTransaction)
 
 router.route('/:id')
     .delete(auth,deleteTransaction)
