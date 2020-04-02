@@ -7,7 +7,8 @@ const initialState = {
     error:false,
     error_message:"",
     user:null,
-    isAuthenticated:false
+    isAuthenticated:false,
+    isLoading:false
 }
 
 const AuthContext = createContext(initialState);
@@ -18,7 +19,7 @@ export const AuthProvider = ({children}) => {
 
     const [state, dispatch] = useReducer(AuthReducer, initialState)
 
-    useEffect(authenticateUser,[]);
+    useEffect(() => authenticateUser(),[]);
 
     // checking if user is authenticated
     function authenticateUser(){

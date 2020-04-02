@@ -1,36 +1,19 @@
-import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-import {TransactionProvider} from '../context/transaction/TransactionContext';
-import {AuthProvider, useAuth} from '../context/auth/AuthContext';
-import Title from './Title';
-import TransactionHistory from './TransactionHistory';
-import Balance from './Balance';
-import ExpenseIncome from './ExpenseIncome';
-import TransactionForm from './TransactionForm';
+import React from 'react'
 
+import AuthenticatedApp from './AuthenticatedApp';
+import UnAuthenticatedApp from './UnAuthenticatedApp';
 
-function App() {
+import {useAuth, AuthProvider} from '../context/auth/AuthContext';
 
-  let authData = useAuth();
+function App (){
 
-  return (
-    <Router>
-      <Route exact path='/'>
-        <AuthProvider>
-          <TransactionProvider>
-            <Title titleText={authData.isAuthenticated?'Loged in':'Not loged in'}/>
-            <Balance/>
-            <ExpenseIncome/>
-            <TransactionHistory/>
-            <TransactionForm/>
-          </TransactionProvider>
-        </AuthProvider>
-      </Route>
-        <Route path='/title'>
-          <Title titleText='Budget tracker'/>
-        </Route>
-    </Router>
-  );
+    const authData = useAuth();
+
+    return (
+        <>
+            {authData.data.isAuthenticated?<AuthenticatedApp/>:<UnAuthenticatedApp/>} 
+        </>
+    )
 }
 
 export default App;

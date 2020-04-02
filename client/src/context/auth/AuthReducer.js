@@ -1,22 +1,23 @@
 export default (state, action) => {
     switch (action.type) {
         case 'AUTHENTICATION_SUCCESS':
-            return {
+            console.log('here');
+            return ({
                 ...state,
                 user:action.payload.data,
                 isAuthenticated:true
-            }
+            })
         case 'AUTHENTICATION_FAIL':
-            return {
+            return ({
                 ...state,
                 error:true,
                 error_message:action.payload.error
-            }
+            })
         case 'NO_TOKEN':
-            return{
+            return ({
                 ...state,
                 isAuthenticated:false
-            }
+            })
         default:
             return state;
     }
