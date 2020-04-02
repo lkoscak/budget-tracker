@@ -15,7 +15,12 @@ export const TransactionProvider = ({children}) => {
 
     // Getting transactions
     function getTransactions(){
-        fetch('/api/v1/transactions', {method:"GET"})
+        fetch('/api/v1/transactions', {
+            method:"GET",
+            headers:{
+                'x-auth-token':localStorage.getItem('auth-token')
+            }
+        })
         .then(res => res.json())
         .then(transactions => dispatch({
             type:'GET_TRANSACTIONS',
@@ -33,7 +38,8 @@ export const TransactionProvider = ({children}) => {
         fetch('api/v1/transactions', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'x-auth-token':localStorage.getItem('auth-token')
             },
             body: JSON.stringify(transaction),
             })
@@ -51,7 +57,10 @@ export const TransactionProvider = ({children}) => {
 
     function deleteTransaction(id){
         fetch(`api/v1/transactions/${id}`,{
-            method:'DELETE'
+            method:'DELETE',
+            headers:{
+                'x-auth-token':localStorage.getItem('auth-token')
+            }
         })
         .then(response => response.json())
         .then(data => {
