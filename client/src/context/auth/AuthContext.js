@@ -7,8 +7,7 @@ const initialState = {
     error:false,
     error_message:"",
     user:null,
-    isAuthenticated:true,
-    token:""
+    isAuthenticated:false
 }
 
 const AuthContext = createContext(initialState);
@@ -23,15 +22,30 @@ export const AuthProvider = ({children}) => {
 
     // checking if user is authenticated
     function authenticateUser(){
-        fetch('/api/v1/users/user',{
-            method:'GET',
-            headers:{
-                'x-auth-token':getToken()
-            }
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.log(error))
+        let token = getToken();
+        if(token === null) dispatch({
+            type: 'NO_TOKEN',
+        });
+        else{
+            fetch('/api/v1/users/user',{
+                method:'GET',
+                headers:{
+                    'x-auth-token':token
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) dispatch({
+                    type: 'AUTHENTICATION_SUCCESS',
+                    payload:data
+                });
+                else dispatch({
+                    type: 'AUTHENTICATION_FAIL',
+                    payload:data
+                });
+            })
+            .catch(error => console.log(error))
+        }
     }
 
     return (
@@ -44,6 +58,6 @@ export const AuthProvider = ({children}) => {
 }
 
 function getToken(){
-    console.log(localStorage.getItem('token'));
-    return localStorage.getItem('token');
+    console.log(localStorage.getItem('auth-token'));
+    return localStorage.getItem('auth-token');
 }
