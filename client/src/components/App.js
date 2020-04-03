@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import AuthenticatedApp from './AuthenticatedApp';
 import UnAuthenticatedApp from './UnAuthenticatedApp';
@@ -14,15 +14,15 @@ function App (){
 
     return (
         <>
+         <Router>
             <Navbar/>
-            <Router>
-                <Route exact path='/'>
-                    {authData.data.isAuthenticated?<AuthenticatedApp/>:<UnAuthenticatedApp/>}
-                </Route>
-                <Route path='/login'>
-                    <LoginForm/>
-                </Route>
-                <Route path='/register'></Route>
+                    <Route exact path='/'>
+                        {authData.data.isAuthenticated?<AuthenticatedApp/>:<UnAuthenticatedApp/>}
+                    </Route>
+                    <Route path='/login'>
+                        <LoginForm/>
+                    </Route>
+                    <Route path='/register'></Route>
             </Router>
         </>
     )

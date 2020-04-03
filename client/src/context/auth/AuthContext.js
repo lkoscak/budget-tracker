@@ -60,7 +60,7 @@ export const AuthProvider = ({children}) => {
     }
 
     // login action
-    function login (user){
+    function login (user, callback){
     
         fetch('/api/v1/users/login',{
             method:'POST',

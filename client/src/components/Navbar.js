@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom';
 
 import NavbarLink from './NavbarLink';
 import {useAuth} from '../context/auth/AuthContext';;
@@ -7,7 +8,7 @@ function Navbar (){
     const auth = useAuth();
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <a className="navbar-brand text-warning" href="/">Budget tracker</a>
+        <Link className="navbar-brand text-warning" to="/">Budget tracker</Link>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>

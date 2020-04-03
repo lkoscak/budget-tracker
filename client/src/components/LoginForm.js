@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
+import {Redirect} from 'react-router-dom';
 
 import {useAuth} from '../context/auth/AuthContext';
+import AuthenticatedApp from './AuthenticatedApp';
 
 import Alert from './Alert';
 
@@ -19,6 +21,7 @@ function LoginForm (){
         auth.login(user);
     }
 
+
     function inputChanged(e){
         let {name, value} = e.target;
         setFormInput(prevValue => ({
@@ -28,6 +31,8 @@ function LoginForm (){
     }
 
     return (
+        <>
+        {auth.data.isAuthenticated?<Redirect to='/'/>:
         <>
         {auth.data.error?<Alert error={auth.data.error_message}/>:null}
         <form onSubmit={formSubmitted}>
@@ -41,6 +46,8 @@ function LoginForm (){
             </div>
             <button type="submit" className="btn btn-outline-warning btn-block mb-5">Login</button>
         </form>
+        </>
+        }
         </>
     )
 }
