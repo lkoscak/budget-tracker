@@ -78,6 +78,7 @@ module.exports.registerUser = async (req,res,next) => {
 module.exports.loginUser = async (req,res,next) => {
     try {
         const {email, password} = req.body;
+        
         if(email===""||password==="") {
             res.status(400).json({
                 success:false,

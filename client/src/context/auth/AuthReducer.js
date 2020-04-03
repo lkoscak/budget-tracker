@@ -18,6 +18,10 @@ export default (state, action) => {
                 ...state,
                 isAuthenticated:false
             })
+        case 'LOGOUT':
+            return (
+                action.payload
+            )
         default:
             return state;
     }

@@ -7,7 +7,6 @@ function UnAuthenticatedApp () {
     const auth = useAuth();
     return (
         <div>
-            <Title titleText="Book tracker"/>
         </div>
     )
 }

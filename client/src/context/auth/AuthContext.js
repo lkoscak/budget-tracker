@@ -49,9 +49,39 @@ export const AuthProvider = ({children}) => {
         }
     }
 
+    // logout action
+    function logout(){
+        localStorage.removeItem('auth-token');
+        dispatch({
+            type:'LOGOUT',
+            payload:initialState
+        });
+    }
+
+    // login action
+    function login (user){
+    
+        fetch('/api/v1/users/login',{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) dispatch({
+                
+            })
+        })
+        .catch(error => console.log(error));
+    }
+
     return (
         <AuthContext.Provider value={{
-            data:state
+            data:state,
+            logout,
+            login
         }}>
         {children}
         </AuthContext.Provider>
