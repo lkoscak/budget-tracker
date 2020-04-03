@@ -26,6 +26,7 @@ export const AuthProvider = ({children}) => {
         let token = getToken();
         if(token === null) dispatch({
             type: 'NO_TOKEN',
+            payload:initialState
         });
         else{
             fetch('/api/v1/users/user',{
@@ -70,8 +71,15 @@ export const AuthProvider = ({children}) => {
         })
         .then(res => res.json())
         .then(data => {
-            if(data.success) dispatch({
-                
+            if(data.success) {
+                localStorage.setItem('auth-token', data.token);
+                dispatch({
+                type:'AUTHENTICATION_SUCCESS',
+                payload:data
+            })}
+            else dispatch({
+                type:'AUTHENTICATION_FAIL',
+                payload:data
             })
         })
         .catch(error => console.log(error));

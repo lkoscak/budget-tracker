@@ -3,21 +3,22 @@ export default (state, action) => {
         case 'AUTHENTICATION_SUCCESS':
             console.log('here');
             return ({
-                ...state,
+                error:false,
+                error_message:"",
                 user:action.payload.data,
                 isAuthenticated:true
             })
-        case 'AUTHENTICATION_FAIL':
+        case 'AUTHENTICATION_FAIL':   
             return ({
-                ...state,
                 error:true,
-                error_message:action.payload.error
-            })
-        case 'NO_TOKEN':
-            return ({
-                ...state,
+                error_message:action.payload.error,
+                user:null,
                 isAuthenticated:false
             })
+        case 'NO_TOKEN':
+            return (
+                action.payload
+            )
         case 'LOGOUT':
             return (
                 action.payload

@@ -6,7 +6,7 @@ import UnAuthenticatedApp from './UnAuthenticatedApp';
 import Navbar from './Navbar';
 import LoginForm from './LoginForm';
 
-import {useAuth, AuthProvider} from '../context/auth/AuthContext';
+import {useAuth} from '../context/auth/AuthContext';
 
 function App (){
 

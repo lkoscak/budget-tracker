@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 
 import {useAuth} from '../context/auth/AuthContext';
 
+import Alert from './Alert';
+
 function LoginForm (){
 
     const auth = useAuth();
@@ -14,6 +16,7 @@ function LoginForm (){
     function formSubmitted(e){
         e.preventDefault();
         let user = formInput;
+        auth.login(user);
     }
 
     function inputChanged(e){
@@ -25,6 +28,8 @@ function LoginForm (){
     }
 
     return (
+        <>
+        {auth.data.error?<Alert error={auth.data.error_message}/>:null}
         <form onSubmit={formSubmitted}>
             <div className="form-group">
                 <label className="col-form-label col-form-label-sm">Email</label>
@@ -36,6 +41,7 @@ function LoginForm (){
             </div>
             <button type="submit" className="btn btn-outline-warning btn-block mb-5">Login</button>
         </form>
+        </>
     )
 }
 
