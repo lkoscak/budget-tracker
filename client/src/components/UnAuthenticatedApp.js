@@ -1,13 +1,11 @@
 import React from 'react'
 
-import Title from './Title';
-import {useAuth} from '../context/auth/AuthContext';
+//import {useAuth} from '../context/auth/AuthContext';
 
 function UnAuthenticatedApp () {
-    const auth = useAuth();
+    //const auth = useAuth();
     return (
-        <div>
-        </div>
+       <></>
     )
 }
 

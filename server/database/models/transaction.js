@@ -9,6 +9,10 @@ const transactionSchema = new mongoose.Schema({
         type:Number,
         required:[true, 'Amount not specified']
     },
+    user:{
+        type:String,
+        required:[true, 'Transaction needs to be connected to a user']
+    },
     created:{
         type:Date,
         default:Date.now

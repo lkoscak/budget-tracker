@@ -1,25 +1,5 @@
 const Transaction = require('../database/models/transaction');
 
-
-// @desc    Get all transactions
-// @route   GET api/v1/transactions
-// @access  Public
-module.exports.getTransactions = async(req, res, next) => {
-    try {
-        let transactions = await Transaction.find().sort({'created':'desc'}); //limit(n), skip(n)
-        res.status(200).json({
-            success:true,
-            count:transactions.length,
-            data:transactions
-        });
-    } catch (error) {
-        res.status(500).json({
-            success:false,
-            error:error.message
-        });
-    }
-}
-
 // @desc    Get a transaction
 // @route   GET api/v1/transactions/id
 // @access  Public
@@ -51,6 +31,8 @@ module.exports.getTransaction = async(req, res, next) => {
 // @access  Public
 module.exports.addTransaction = async(req, res, next) => {
     try {
+        console.log(req.body);
+        
         let transaction = await Transaction.create(req.body);
         return res.status(201).location(`/api/v1/transactions/${transaction._id}`).json({
             success:true,

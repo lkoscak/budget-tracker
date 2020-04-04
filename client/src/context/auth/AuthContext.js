@@ -8,7 +8,7 @@ const initialState = {
     error_message:"",
     user:null,
     isAuthenticated:false,
-    isLoading:false
+    token:""
 }
 
 const AuthContext = createContext(initialState);
@@ -60,9 +60,35 @@ export const AuthProvider = ({children}) => {
     }
 
     // login action
-    function login (user, callback){
+    function login (user){
     
         fetch('/api/v1/users/login',{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                localStorage.setItem('auth-token', data.token);
+                dispatch({
+                type:'AUTHENTICATION_SUCCESS',
+                payload:data
+            })}
+            else dispatch({
+                type:'AUTHENTICATION_FAIL',
+                payload:data
+            })
+        })
+        .catch(error => console.log(error));
+    }
+
+    // register action
+    function register (user){
+    
+        fetch('/api/v1/users/register',{
             method:'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -89,7 +115,8 @@ export const AuthProvider = ({children}) => {
         <AuthContext.Provider value={{
             data:state,
             logout,
-            login
+            login,
+            register
         }}>
         {children}
         </AuthContext.Provider>

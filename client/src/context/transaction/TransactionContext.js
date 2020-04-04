@@ -1,6 +1,8 @@
 import React, { createContext, useReducer, useEffect, useContext } from 'react';
 import TransactionReducer from './TransactionReducer';
 
+import {useAuth} from '../auth/AuthContext';
+
 const initialState = {
     transactions:[]
 }
@@ -11,14 +13,16 @@ export const useTransaction = () => useContext(TransactionContext);
 
 export const TransactionProvider = ({children}) => {
 
+    const auth = useAuth();
+
     const [state, dispatch] = useReducer(TransactionReducer, initialState);
 
     // Getting transactions
     function getTransactions(){
-        fetch('/api/v1/transactions', {
+        fetch(`api/v1/users/${auth.data.user._id}/transactions`,{
             method:"GET",
             headers:{
-                'x-auth-token':localStorage.getItem('auth-token')
+                'x-auth-token':auth.data.token
             }
         })
         .then(res => res.json())
@@ -34,14 +38,18 @@ export const TransactionProvider = ({children}) => {
 
     // Working with transactions
     function addTransaction(transaction){
-
+        
         fetch('api/v1/transactions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'x-auth-token':localStorage.getItem('auth-token')
+                'x-auth-token':auth.data.token
             },
-            body: JSON.stringify(transaction),
+            body: JSON.stringify({
+                description:transaction.description,
+                amount:transaction.amount,
+                user:auth.data.user._id
+            }),
             })
             .then(response => response.json())
             .then(data => {
@@ -59,7 +67,7 @@ export const TransactionProvider = ({children}) => {
         fetch(`api/v1/transactions/${id}`,{
             method:'DELETE',
             headers:{
-                'x-auth-token':localStorage.getItem('auth-token')
+                'x-auth-token':auth.data.token
             }
         })
         .then(response => response.json())

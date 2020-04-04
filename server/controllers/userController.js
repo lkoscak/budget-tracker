@@ -1,4 +1,5 @@
 const User = require('../database/models/user');
+const Transaction = require('../database/models/transaction');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -50,7 +51,7 @@ module.exports.registerUser = async (req,res,next) => {
                                 success:true,
                                 token:token,
                                 data:{
-                                    id:registerdUser._id,
+                                    _id:registerdUser._id,
                                     name:registerdUser.name,
                                     email:registerdUser.email
                                 }
@@ -110,7 +111,7 @@ module.exports.loginUser = async (req,res,next) => {
                                 success:true,
                                 token:token,
                                 data:{
-                                    id:user._id,
+                                    _id:user._id,
                                     name:user.name,
                                     email:user.email
                                 }
@@ -128,6 +129,9 @@ module.exports.loginUser = async (req,res,next) => {
     }
 };
 
+// @desc    Get user while authenticating
+// @route   GET api/v1/user
+// @access  Private
 module.exports.getUser=(req,res) => {
     User.findById(req.user.id)
     .select('-password')
@@ -135,4 +139,23 @@ module.exports.getUser=(req,res) => {
         success:true,
         data:user
     }))
+}
+
+// @desc    Get all transactions of a given user
+// @route   GET api/v1/users/:id/transactions
+// @access  Private
+module.exports.getTransactions = async(req, res, next) => {
+    try {
+        let transactions = await Transaction.find({user:req.params.id}).sort({'created':'desc'}); //limit(n), skip(n)
+        res.status(200).json({
+            success:true,
+            count:transactions.length,
+            data:transactions
+        });
+    } catch (error) {
+        res.status(500).json({
+            success:false,
+            error:error.message
+        });
+    }
 }
