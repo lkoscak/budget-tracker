@@ -40,5 +40,3 @@ JWT_SECRET = desired secret for signing JWT tokens
  # Prod
  npm start
 ```
-
-## Live version at: https://b-tracker.herokuapp.com/
