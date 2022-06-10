@@ -2,6 +2,8 @@
 
 > Full MERN stack budget tracker
 
+![Preview](./screenshoot.png)
+
 ## Live version at: https://b-tracker.herokuapp.com/
 
 ## Usage
